@@ -1,15 +1,15 @@
 import productos from '../db/local/productos.json' with { type: 'json' }
 
 
-export class ProdcutosService {
+export class ProductosService {
 
     static async getProductos() {
         return productos
     }
 
-    static async getProductoId(id) {
-        return productos.find((todo) => {
-            return productos.id === id
+    static async getProductoById(id) {
+        return productos.find((producto) => {
+            return producto.id === id
         })
     }
 
@@ -20,12 +20,12 @@ export class ProdcutosService {
         return newProducto
     }
 
-    static async updateProducto(producto) {
-        let index = productos.find((todo) => {
-            return productos.id === id
+    static async updateProducto(producto,id) {
+        let index = productos.findIndex((_producto) => {
+            return _producto.id === id
         })
         if(index === -1){
-            return {"error":"producto no encontrado"}
+            return null
         }
         else{
             productos[index]=producto
@@ -33,9 +33,9 @@ export class ProdcutosService {
         return producto
     }
 
-    static async deleteProducto(producto) {
-        let index = productos.find((todo) => {
-            return productos.id === id
+    static async deleteProducto(id) {
+        let index = productos.findIndex((_producto) => {
+            return _producto.id === id
         })
         if(index === -1){
             return {"error":"producto no encontrado"}
@@ -43,12 +43,12 @@ export class ProdcutosService {
         else{
             productos.splice(index,1)
         }
-        return producto
+        //return producto
     }
 
     static async getProductosDisponibles(){
         return productos.filter((producto)=>{
-            producto.disponible===true
+            return producto.disponible===true
         })
     }
 }
